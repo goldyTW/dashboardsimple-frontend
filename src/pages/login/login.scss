@@ -1,0 +1,96 @@
+.login{
+    padding: 10%;
+    background: #F9F9F9;
+    height: 100vh;
+
+    .wrapper{
+        text-align: center;
+        align-items: center;
+        width: 40%;
+        margin: auto;
+
+        .loginTitle{
+            font-family: 'Lato';
+            font-style: normal;
+            font-size: 28px;
+            line-height: 38px;
+            color: #606060;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card{
+            text-align: center;
+            padding: 5%;
+            background: #FFFFFF;
+            border: 1px solid #DFDFDF;
+            box-shadow: 2px 4px 10px rgba(64, 64, 64, 0.25);
+            border-radius: 20px;
+        }
+
+        .field{
+            align-self: center;
+            margin: 10px;
+            width: 60%;
+        }
+        
+        .spiner{
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+            align-self: center;
+            align-items: center;
+            text-align: center;
+
+            @keyframes spinner {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+    
+            .loading-spinner {
+                width: 25px;
+                height: 25px;
+                border: 5px solid #ccc;
+                /* Light grey */
+                border-top: 5px solid #383636;
+                /* Black */
+                border-radius: 50%;
+                margin-right: 10px;
+                animation: spinner 1.5s linear infinite;
+            }
+        }
+        
+
+        .loginButton{
+            background: #60D19B;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            border: none;
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            color: #F8F8F8;
+            margin-top: 30px;
+            align-self: center;
+            padding: 15px 60px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+@media(max-width:768px){
+    .login{
+        .wrapper{
+            .field{
+                width: 90%;
+            }
+        }
+    }
+}

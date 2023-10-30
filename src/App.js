@@ -1,8 +1,11 @@
-import Login from "./pages/login/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React from "react";import 'antd/dist/antd.css';
+import React from "react";
+import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.css';
-import KonfigurasiJukir from "./pages/config-jukir";
+import Home from "./pages/Home";
+import Login from "./pages/login/Login";
+import Stok from "./pages/Stok";
+import Penjualan from "./pages/Penjualan";
 
 function App() {
 
@@ -10,10 +13,10 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/">
-            <Route path="login" element={<Login />} />
-            <Route path="config-jukir" element={<KonfigurasiJukir></KonfigurasiJukir>}></Route>
-          </Route>
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="login" element={<Login />} />
+          <Route path="stok" element={<Stok />} />
+          <Route path="penjualan" element={<Penjualan />} />
         </Routes>
       </BrowserRouter>
     </div>

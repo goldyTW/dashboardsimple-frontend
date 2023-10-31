@@ -22,8 +22,7 @@ const Navbar = ({setSidebarOpen, sidebarOpen}) => {
           onClick={() => setSidebarOpen(!sidebarOpen)}
           />
           <span className="navTitle">
-            <b>Emeste</b> 
-            Store System</span>
+            <b>Emeste</b> Store System</span>
         </div>
         <div className="col-md-6 text-end month">
           <span className="navTitle">{(moment(today).format('MMMM YYYY')).toLocaleString('id')}</span>

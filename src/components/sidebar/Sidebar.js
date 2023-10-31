@@ -50,7 +50,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
       <div className="nameDisplay mt-2 mb-1">{sidebarOpen ? userName : userName.split('')[0 ]}</div>
       <div className="roleDisplay mt-1 mb-4">{role}</div>
       <a className="logoutBtn px-3 py-2 mt-4" onClick={()=>handleLogout()}>
-        <Icon icon="material-symbols:logout" className='align-self-center ms-2' width={20}/>
+        <Icon icon="quill:off" className='align-self-center mx-1' width={18}/>
           {sidebarOpen ? 'Sign Out' : ''}
       </a>
     

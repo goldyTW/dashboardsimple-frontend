@@ -1,7 +1,7 @@
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { Input, Table } from 'antd';
@@ -14,8 +14,9 @@ import { render } from "@testing-library/react";
 const Penjualan = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setloading] = useState(false);
+  const [data, setdata] = useState([])  //variabel
   const navigate = useNavigate();
-  let url = process.env.REACT_APP_API_URL ;
+  let url = process.env.REACT_APP_API_URL ; //variable
 
   const penjualan = [
     {
@@ -35,6 +36,17 @@ const Penjualan = () => {
     // if(!Cookies.get('user-data')){
     //   navigate('/login', { replace: true });
     // }
+    // axios.get(`${url}/merchant`,{
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer '+Cookies.get('token') ,
+    //   },
+    // })
+    // .then(res => {
+    //     // console.log(res) //buat liat return datanya
+    //     // setLoading(false)
+    //     // setData(res.data.data)
+    //   })
   }, [])
 
   function handlePrint(id){
@@ -58,15 +70,15 @@ const Penjualan = () => {
       sortDirections: ['ascend', 'descend'],
       align:'center',
       width: 150,
-      sorter: (a, b) => {return a.nama_barang.localeCompare(b.nama_barang)},
+      sorter: (a, b) => {return a.nama_barang.localeCompare(b.nama_barang)}, //string
     },
     {
-      dataIndex: "waktu_penjualan",
+      dataIndex: "waktu_penjualan", //buat nyambungin data
       title: "Tanggal Penjualan",
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['ascend', 'descend'],  // sort nya bisa apa aja
       align:'center',
-      width: 100,
-      sorter:(a,b) => a.waktu_penjualan - b.waktu_penjualan,
+      width: 100, //lebar kolom
+      sorter:(a,b) => a.waktu_penjualan - b.waktu_penjualan,  //integer atau date
       render: ((_, record) => ( moment(record.waktu_penjualan).format('DD-MM-YY') ))
     },
     {
@@ -156,7 +168,18 @@ const Penjualan = () => {
       </div>
       <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
-        <h1 className="pageTitle mt-xl-3 mt-5">Penjualan</h1>
+        <div className="row"> 
+          <div className="col-12 col-md-6 align-self-center">     
+            <h1 className="pageTitle mt-xl-3 mt-5">Penjualan</h1>
+          </div>  
+          <div className="col-12 col-md-6 text-end pt-xl-2">  
+            <Link to={"/penjualan/input"}> 
+              <button className="tambahButton my-4 align-self-center">
+              <Icon icon="gridicons:add" className='me-1' width={20}/>
+                Tambah Penjualan</button>
+            </Link>
+          </div>  
+        </div>
         {
            !loading ? 
            <Table

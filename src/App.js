@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import Stok from "./pages/Stok";
 import Penjualan from "./pages/Penjualan";
+import InputPenjualan from "./pages/InputPenjualan";
 
 function App() {
 
@@ -13,10 +14,18 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="login" element={<Login />} />
-          <Route path="stok" element={<Stok />} />
-          <Route path="penjualan" element={<Penjualan />} />
+          <Route path="/">
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="stok" element={<Stok />} />
+            <Route path="penjualan">
+              <Route index element={<Penjualan />}/>
+              <Route path="input" element={<InputPenjualan />} />
+              <Route path="edit/:id" element={<InputPenjualan />} />
+            </Route>
+            
+          </Route>
+         
         </Routes>
       </BrowserRouter>
     </div>

@@ -34,6 +34,44 @@
         width: 8%;
         margin-right: 2%;
     }
+    
+    .penjualan-botton {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+        .penjualan-botton .pageTitle {
+            flex-grow: 2;
+        }
+        .ant-card.ant-card-bordered.input-botton {
+            flex-grow: 1;
+            width: fit-content;
+            height: fit-content;
+            flex-shrink: 0;
+            box-shadow: 1px 2px 10px rgba(64, 64, 64, 0.25);
+            border-color: rgba(96, 209, 155, 0.67);
+            border-radius: 5%;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            background-color: rgba(96, 209, 155, 0.67);
+        }
+
+            .ant-card.ant-card-bordered .ant-card-body {
+                display: flex;
+                width: fit-content;
+                justify-content: center;
+                align-items: center;
+                padding: 5px;
+            }
+            .input-botton .ant-card-body p {
+                color: #FFF;
+                margin: 0;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+            }
 }
 @media(max-width:768px){
     .main{

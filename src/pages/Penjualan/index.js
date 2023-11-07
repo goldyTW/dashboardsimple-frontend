@@ -1,10 +1,10 @@
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from "axios";
 import Cookies from 'js-cookie';
-import { Input, Table } from 'antd';
+import { Input, Table, Card } from 'antd';
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import moment from "moment";
@@ -12,6 +12,9 @@ import { Icon } from "@iconify/react";
 import { render } from "@testing-library/react";
 
 const Penjualan = () => {
+  const location = useLocation();
+  const last = location.pathname.split("/")
+  const active = last[1];
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
@@ -156,7 +159,17 @@ const Penjualan = () => {
       </div>
       <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
-        <h1 className="pageTitle mt-xl-3 mt-5">Penjualan</h1>
+        <div className="penjualan-botton">
+          <h1 className="pageTitle mt-xl-3 mt-5">Penjualan</h1>
+          <Link to="/input-penjualan">
+            <div className={active == "input-penjualan"}>
+              <Card className="input-botton">
+                <Icon icon="gridicons:add" className="icon-dashboard" width={22.5} color="#FFFFFF"/>
+                <p>Input Penjualan</p>
+              </Card>
+            </div>
+          </Link>
+        </div>
         {
            !loading ? 
            <Table

@@ -1,0 +1,105 @@
+.main{
+    // background: '#f9f9f9';
+    background-image: url('../../images/mainbg.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+
+    .wrapper {
+        text-align: center;
+        align-items: center;
+        width: 60%;
+        margin: auto;
+    }
+
+        .pageTitle {
+            font-family: 'Inter';
+            font-style: normal;
+            font-size: 28px;
+            line-height: 100%;
+            color: #606060;
+        }
+
+        .card{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 5%;
+            text-align: left;
+            background: #FFFFFF;
+            border: 1px solid #DFDFDF;
+            box-shadow: 2px 4px 10px rgba(64, 64, 64, 0.25);
+            border-radius: 20px;
+        }
+
+        .left-align {
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        .ant-space.ant-space-vertical {
+            width: 100%;
+        }
+
+        .submit {
+            grid-column: span 2;
+            font-size: large;
+            margin: 20px auto;
+            width: 120px;
+            background-color: rgba(96, 209, 155, 1);
+            border-radius: 15%;
+            box-shadow: #606060;
+        }
+        .spiner{
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+            align-self: center;
+            align-items: center;
+            text-align: center;
+
+            @keyframes spinner {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+    
+            .loading-spinner {
+                width: 25px;
+                height: 25px;
+                border: 5px solid #ccc;
+                /* Light grey */
+                border-top: 5px solid #383636;
+                /* Black */
+                border-radius: 50%;
+                margin-right: 10px;
+                animation: spinner 1.5s linear infinite;
+            }
+        }
+}
+
+@media(max-width:768px){
+    .main{
+        padding-top: 25%;
+        .wrapper{
+            width: 80%;
+            margin: auto;
+        }
+    }
+}
+
+@media(max-width:576px){
+    .main{
+        padding: 5%;
+        padding-top: 50%;
+        .wrapper{
+            width: 90%;
+            margin: auto;
+        }
+    }
+}

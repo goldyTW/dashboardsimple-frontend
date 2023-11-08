@@ -8,6 +8,7 @@ import Stok from "./pages/Stok";
 import Penjualan from "./pages/Penjualan";
 import Dashboard from "./pages/Dashboard";
 import InputPenjualan from "./pages/input-penjualan";
+import InputSuratJalan from "./pages/input-surat-jalan";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="stok" element={<Stok />} />
           <Route path="penjualan" element={<Penjualan />} />
           <Route path="input-penjualan" element={<InputPenjualan />} />
+          <Route path="input-surat-jalan" element={<InputSuratJalan />} />
         </Routes>
       </BrowserRouter>
     </div>

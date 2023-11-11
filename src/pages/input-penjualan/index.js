@@ -1,7 +1,7 @@
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Cookies from 'js-cookie';
 import dayjs from 'dayjs';
@@ -80,9 +80,14 @@ const InputPenjualan = () => {
       </div>
       <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+        <div className="row mt-5">
+          <div className="col-12 col-md-6 breadcrumbs">   
+            <Link to="/penjualan"><span>Penjualan</span></Link> <span>{'>>'}</span> <span>Input</span>
+          </div>
+        </div>
         <div className="row justify-content-center">
           <div className="col-12 col-md-6 align-self-center text-center">     
-            <h1 className="pageTitle mt-5">Input <b>Penjualan</b></h1>
+            <h1 className="pageTitle mt-3">Input <b>Penjualan</b></h1>
           </div>  
           <div className="card col-md-10 col-12">
             <div className="row justify-content-center">

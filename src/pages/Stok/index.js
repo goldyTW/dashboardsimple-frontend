@@ -146,7 +146,7 @@ const Stok = () => {
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
         <div className="row"> 
         <div className="col-12 col-md-6 align-self-center">     
-            <h1 className="pageTitle mt-xl-3 mt-5">Stok</h1>
+            <h1 className="pageTitle mt-xl-3 mt-5"><b>Stok</b></h1>
           </div>  
           <div className="col-12 col-md-6 text-end pt-xl-2">  
             <Link to={"/stok/input"}> 

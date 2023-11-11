@@ -32,42 +32,42 @@ const Login = () => {
     }
     else{
       navigate('/', { replace: true });
-      // axios.post(`${url}/auth/login`,data,
-      // {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Accept:'application/json'
-      //   },
-      // }
-      // )
-      // .then(res => {
-      //   if(res.status == 200){
-      //     toast.success('Login Berhasil');
-      //     Cookies.set('token', res.data.data.token)
-      //     Cookies.set('user-data', JSON.stringify(res.data.data))
-      //     navigate(res.data.data.id_dc_group_user == 12 ? '/koordinator-jukir' : 
-      //     res.data.data.id_dc_group_user == 9 ? '/pemakaian-mesin' :
-      //     '/', { replace: true });
-      //   }
-      //   else if(res.status == "Error"){
-      //     toast.error(res.message)
-      //   }
-      // })
-      // .catch(function (error) {
-      //   setLoading(true);
-      //     if (error.response) {
-      //       toast.error(error.response.data.message)
-      //       console.log(error.response.data);
-      //       console.log(error.response.status);
-      //       console.log(error.response.headers);
-      //       setLoading(false);
-      //     } else if (error.request) {
-      //       console.log(error.request);
-      //       setLoading(false);
-      //     } else {
-      //       console.log('Error', error.message);
-      //       setLoading(false);
-      // }})
+      axios.post(`${url}/auth/login`,data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept:'application/json'
+        },
+      }
+      )
+      .then(res => {
+        if(res.status == 200){
+          toast.success('Login Berhasil');
+          Cookies.set('token', res.data.data.token)
+          Cookies.set('user-data', JSON.stringify(res.data.data))
+          navigate(res.data.data.id_dc_group_user == 12 ? '/koordinator-jukir' : 
+          res.data.data.id_dc_group_user == 9 ? '/pemakaian-mesin' :
+          '/', { replace: true });
+        }
+        else if(res.status == "Error"){
+          toast.error(res.message)
+        }
+      })
+      .catch(function (error) {
+        setLoading(true);
+          if (error.response) {
+            toast.error(error.response.data.message)
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            setLoading(false);
+          } else if (error.request) {
+            console.log(error.request);
+            setLoading(false);
+          } else {
+            console.log('Error', error.message);
+            setLoading(false);
+      }})
     }
     
   }

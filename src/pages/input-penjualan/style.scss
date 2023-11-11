@@ -8,12 +8,12 @@
     flex-direction: row;
     height: 100vh;
 
-    .wrapper {
-        text-align: center;
-        align-items: center;
-        width: 60%;
-        margin: auto;
-    }
+    // .wrapper {
+    //     text-align: center;
+    //     align-items: center;
+    //     // width: 100%;
+    //     margin: auto;
+    //     background-color: #383636;
 
         .pageTitle {
             font-family: 'Inter';
@@ -24,9 +24,7 @@
         }
 
         .card{
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            padding: 5%;
+            padding: 2%;
             text-align: left;
             background: #FFFFFF;
             border: 1px solid #DFDFDF;
@@ -45,11 +43,13 @@
 
         .submit {
             grid-column: span 2;
+            border: none;
+            font-family: 'Inter';
             font-size: large;
             margin: 20px auto;
-            width: 120px;
+            // width: 120px;
             background-color: rgba(96, 209, 155, 1);
-            border-radius: 15%;
+            border-radius: 10px;
             box-shadow: #606060;
         }
         .spiner{

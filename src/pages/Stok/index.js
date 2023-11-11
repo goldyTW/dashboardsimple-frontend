@@ -144,17 +144,17 @@ const Stok = () => {
       </div>
       <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
-        <div className="stok-botton">
-          <h1 className="pageTitle mt-xl-3 mt-5">Stok Barang</h1>
-          <Link to="/input-stok">
-            <div className={active == "input-stok"}>
-              <Card className="input-botton">
-                <Icon icon="gridicons:add" className="icon-dashboard" width={22.5} color="#FFFFFF"/>
-                <p>Input Stok</p>
-              </Card>
-            </div>
-          </Link>
-        </div>
+        <div className="row"> 
+        <div className="col-12 col-md-6 align-self-center">     
+            <h1 className="pageTitle mt-xl-3 mt-5">Stok</h1>
+          </div>  
+          <div className="col-12 col-md-6 text-end pt-xl-2">  
+            <Link to={"/stok/input"}> 
+              <button className="tambahButton my-4 align-self-center">
+              <Icon icon="gridicons:add" className='me-1' width={20}/>
+                Tambah Stok</button>
+            </Link>
+          </div>
         {
            !loading ? 
            <Table
@@ -177,6 +177,7 @@ const Stok = () => {
             <span></span>
           </div>
         }
+        </div>
       </div>
     </div>
   )

@@ -59,8 +59,8 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
         {
           // (user_type != 12 && user_type != 9 && user_type != 2) &&
           <>
-          <Link to="/dashboard">
-          <div className={active == "dashboard" ? "menuItem active" : 'menuItem'}>
+          <Link to="/">
+          <div className={active == "" ? "menuItem active" : 'menuItem'}>
             <div className="d-flex justify-content-center">
               <div className="me-1">
                 <Icon icon="ic:round-dashboard" className='' width={18}/> 

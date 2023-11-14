@@ -1,0 +1,160 @@
+.main{
+    // background: '#f9f9f9';
+    background-image: url('../../images/mainbg.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+
+    .mainNavLayoutNotFull{
+        margin: 3%;
+        margin-top: 2%;
+        margin-left: 2%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mainSideLayoutFull{
+        margin: 3%;
+        margin-top: 2%;
+        width: 20%;
+        margin-right: 2%;
+    }
+
+    .mainNavLayoutFull{
+        margin: 3%;
+        margin-top: 2%;
+        margin-left: 2%;
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mainSideLayoutNotFull{
+        margin: 3%;
+        margin-top: 2%;
+        width: 8%;
+        margin-right: 2%;
+    }
+
+    .invoiceTitle{
+        color: #3c3c3c;
+        font-family: 'Averia Serif Libre';
+        font-size: 50px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+    .invoiceSlogan{
+        color: #606060;
+        font-family: 'Inter';
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .invoiceAlamat{
+        color: #606060;
+        font-family: 'Inter';
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .invTable{
+        font-family: sans-serif;
+        font-style: normal;
+        /* font-weight: 500; */
+        font-size: 12px;
+        line-height: 19px;
+        color: #000;
+        border: 0.5px solid #000;
+    }
+    .notafaktur{
+        color: #1f1f1f;
+        font-family: 'Inter';
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .pageTitle{
+        color: #606060;
+        font-family: 'Inter';
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+    .dashboard {
+        width: 100%;
+        padding-top: 24px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+       
+        .icon-dashboard {
+            margin: 5px;
+        }
+    }
+    .btnSave{
+        border: none;
+        padding: 8px 20px;
+        background: rgba(13, 137, 21, 0.87);
+        border-radius: 5px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+        color: #FFFFFF;
+    }
+    .btnKeluar{
+        text-decoration: none;
+        background-color: transparent;
+        border: 1px solid rgba(224, 30, 16, 0.87);
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 17px;
+        color: white;
+        background-color: rgba(224, 30, 16, 0.87);
+        margin-left: 20px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+      }
+}
+@media(max-width:768px){
+    .main{
+        display: block;
+        .mainNavLayoutNotFull{
+            // display: block;
+            margin: 5%;
+            width: 90%;
+        }
+    
+        .mainSideLayoutFull{
+            position: fixed;
+            margin: 8%;
+            margin-top: 5%;
+            width: 84%;
+            z-index: 999;
+        }
+    
+        .mainNavLayoutFull{
+            // display: block;
+            margin: 5%;
+            width: 90%;
+        }
+
+        .mainSideLayoutNotFull{
+            display: none;
+        }
+    }
+}

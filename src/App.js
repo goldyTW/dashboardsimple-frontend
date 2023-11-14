@@ -10,6 +10,7 @@ import Penjualan from "./pages/Penjualan";
 import InputStok from "./pages/input-stok";
 import InputPenjualan from "./pages/input-penjualan";
 import InputSuratJalan from "./pages/input-surat-jalan";
+import SuratJalan from "./pages/surat-jalan";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             </Route>
           </Route>
           <Route path="input-surat-jalan" element={<InputSuratJalan />} />
+          <Route path="surat-jalan" element={<SuratJalan />} />
         </Routes>
       </BrowserRouter>
     </div>

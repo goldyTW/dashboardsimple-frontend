@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Input, DatePicker, Space, Radio, Button } from 'antd';
+import { Input, DatePicker, Space, Radio, Button, Select } from 'antd';
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 
@@ -28,7 +28,6 @@ const InputPenjualan = () => {
   const navigate = useNavigate();
   dayjs.extend(customParseFormat);
   const dateFormat = 'YYYY/MM/DD';
-  const data = {barang, qty, hargaJual, customer, alamat, tglTransaksi, tglKirim, sales, tempo}
   
   const handleDateTransaksiChange = (date, dateString) => {
     setTglTransaksi(date);
@@ -37,15 +36,76 @@ const InputPenjualan = () => {
   const handleDateKirimChange = (date, dateString) => {
     setTglKirim(date);
   }
+  
+  const isTempoDisable = tempoBtn === 1;
 
+  //Fitur Select
+  const onChange = (value, label) => {
+    console.log(`selected ${value} with name ${label.label}`);
+    axios.get(`${url}/listcustomer`)
+      .then(res => {
+        // console.log(res) // buat liat return datanya
+        const selectedCustomer = res.data.find(item => item.id_customer === value)
 
+        if (selectedCustomer) {
+          const alamatData = [{
+            value: selectedCustomer.id_customer,
+            label: selectedCustomer.alamat1,
+          }];
+          setAlamat(alamatData)
+        } else {
+          console.error(`Customer ${value} tidak ditemukan`);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      })
+  };
+
+  const onSearch = (value) => {
+    console.log('search:', value);
+  };
+
+  // Filter `option.label` match the user type `input`
+  const filterOption = (input, option) =>
+  (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   useEffect(() => {
-      // if(!Cookies.get('user-data')){
-      //   navigate('/login', { replace: true });
-      // }
-  }, [])
+    const fetchData = async () => {
+      try {
+        // ambil list barang
+        const barangResponse = await axios.get(`${url}/listbarang/listbarang`);
+        // console.log(barangResponse.data);
+        setBarang(barangResponse.data.map(item => ({
+          value: item.id_barang,
+          label: item.nama_barang,
+        })));
   
+        // ambil list customer
+        const customerResponse = await axios.get(`${url}/listcustomer`);
+        // console.log(customerResponse.data);
+        setCustomer(customerResponse.data.map(item => ({
+          value: item.id_customer,
+          label: item.nama,
+        })));
+  
+        // ambil list sales
+        const salesResponse = await axios.get(`${url}/listsales`, {
+          timeout: 10000,
+        });
+        // console.log(salesResponse.data);
+        setSales(salesResponse.data.map(item => ({
+          value: item.id_sales,
+          label: item.nama,
+        })));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+
   function handleInputPenjualan() {
       setLoading(true)
       if(!barang) {
@@ -57,9 +117,15 @@ const InputPenjualan = () => {
       } else if(!hargaJual) {
           setLoading(false)
           toast.error("Harga jual barang tidak boleh kosong")
+      } else if(!customer) {
+          setLoading(false)
+          toast.error("Customer tidak boleh kosong")
       } else if(!alamat) {
           setLoading(false)
           toast.error("Alamat tidak boleh kosong")
+      } else if(!sales) {
+        setLoading(false)
+          toast.error("Sales tidak boleh kosong")
       } else if(!tglTransaksi) {
           setLoading(false)
           toast.error("Tanggal transaksi tidak boleh kosong")
@@ -80,20 +146,26 @@ const InputPenjualan = () => {
     </div>
     <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
       <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
-      <div className="row">
+      <div className="row justify-content-center">
       <div className="col-12 col-md-6 align-self-center">     
-            <h1 className="pageTitle mt-5">Input Penjualan</h1>
+            <h1 className="pageTitle mt-5 text-center">Input Penjualan</h1>
           </div>  
         <div className="card col-md-10 col-12">
           <div className="row justify-content-center">
             <div className="col-md-6 col-10 px-3 py-2">
               <p className="left-align">Barang</p>
-              <Input 
-                className="py-2"
+              <Select 
+                showSearch
                 placeholder="Barang"
-                // style={{ width:"100%", height: "32.19px" }}
-                value={barang}
-                onChange={(e)=>setBarang(e.target.value)}
+                optionFilterProp="children"
+                style={{ width:"100%" }}
+                // onChange={onChange}
+                onSearch={onSearch}
+                filterOption={filterOption}
+                filterSort={(optionA, optionB) =>
+                  (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                }
+                options={barang}
                 />
             </div>
             <div className="col-md-6 col-10 px-3 py-2">
@@ -126,29 +198,37 @@ const InputPenjualan = () => {
                 // style={{ width:"100%", height: "32.19px", backgroundColor: "silver" }}
                 value={totalHarga? totalHarga : 0}
                 disabled
-                // onChange={(e)=>setTotalHarga(e.target.value)}
                 />
             </div>
           </div>
           <div className="row justify-content-center">
             <div className="col-md-6 col-10 py-2 px-3">
               <p className="left-align">Customer</p>
-              <Input 
-                className="py-2"
-                placeholder="Nama Customer"
-                // style={{ width:"100%", height: "32.19px" }}
-                value={customer}
-                onChange={(e)=>setCustomer(e.target.value)}
+              <Select 
+                showSearch
+                placeholder="Customer"
+                optionFilterProp="children"
+                style={{ width:"100%" }}
+                onChange={onChange}
+                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                filterSort={(optionA, optionB) =>
+                  (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                }
+                options={customer}
                 />
             </div>
             <div className="col-md-6 col-10 py-2 px-3">
               <p className="left-align">Alamat</p>
-              <Input 
-                className="py-2"
+              <Select 
+                showSearch
                 placeholder="Alamat"
-                // style={{ width:"100%", height: "32.19px" }}
-                value={alamat}
-                onChange={(e)=>setAlamat(e.target.value)}
+                optionFilterProp="children"
+                style={{ width:"100%" }}
+                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                filterSort={(optionA, optionB) =>
+                  (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                }
+                options={alamat}
                 />
             </div>
           </div>
@@ -179,12 +259,17 @@ const InputPenjualan = () => {
           <div className="row justify-content-center">
             <div className="col-md-6 col-10 py-2 px-3">
               <p className="left-align">Sales</p>
-              <Input 
-                className="py-2"
-                placeholder="Nama Sales"
-                // style={{ width:"100%", height: "32.19px" }}
-                value={sales}
-                onChange={(e)=>setSales(e.target.value)}
+              <Select 
+                showSearch
+                placeholder="Barang"
+                optionFilterProp="children"
+                style={{ width:"100%" }}
+                onSearch={onSearch}
+                filterOption={filterOption}
+                filterSort={(optionA, optionB) =>
+                  (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                }
+                options={sales}
                 />
             </div>
             <div className="col-md-6 col-10 py-2 px-3">
@@ -193,13 +278,22 @@ const InputPenjualan = () => {
                 <Radio value={1}>Cash</Radio>
                 <Radio value={2}>Tempo</Radio>
               </Radio.Group>
-              <Input 
-                className="py-2"
-                placeholder=""
-                // style={{ width:"100%", height: "32.19px" }}
-                value={tempo}
-                onChange={(e)=>setTempo(e.target.value)}
-                />
+              {isTempoDisable ? (
+                <Input 
+                  className="py-2"
+                  placeholder=""
+                  style={{ display: "none" }}
+                  value={tempo}
+                  onChange={(e)=>setTempo(e.target.value)}
+                  />
+              ) : (
+                <Input 
+                  className="py-2"
+                  placeholder=""
+                  value={tempo}
+                  onChange={(e)=>setTempo(e.target.value)}
+                  />
+              )}
             </div>
           </div>
           {

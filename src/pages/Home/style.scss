@@ -62,11 +62,16 @@
         border-radius: 10px;
         margin: 1%;
     }
-        .ant-card.ant-card-bordered .ant-card-body {
-            display: flex;
+        .ant-card-body {
             height: 100%;
+            width: fit-content;
             justify-content: center;
             align-items: center;
+        }
+
+        .ant-card-body a {
+            display: flex;
+            flex-direction: row;
         }
         .ant-card-body p {
             color: #FFF;

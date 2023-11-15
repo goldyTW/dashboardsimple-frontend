@@ -8,11 +8,14 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { Input, Card } from 'antd';
 import { Icon } from "@iconify/react";
+import HomeCard from "../../components/Cards/HomeCard";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
-  let url = process.env.REACT_APP_API_URL ;
+  let url = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     // if(!Cookies.get('user-data')){
@@ -23,37 +26,44 @@ const Home = () => {
 
   return (
     <div className="main">
-      <div className={sidebarOpen ? "mainSideLayoutFull" : "mainSideLayoutNotFull" }>
+      <div className={sidebarOpen ? "mainSideLayoutFull" : "mainSideLayoutNotFull"}>
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}></Sidebar>
       </div>
-      <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
-        <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+      <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull"}>
+        <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="dashboard">
-            <Card className="input-stok">
-                <Link to="/stok/input">
-                  <>
-                  <Icon icon="gridicons:add" className="icon-dashboard" width={27} color="#FFFFFF"/>
-                  <p>Input Stok</p>
-                  </>
-                </Link>
-            </Card>
-            <Card className="penjualan">
-              <Link to="/penjualan/input">
-                <>
-                <Icon icon="fa6-solid:rupiah-sign" className="icon-dashboard" width={27} color="#FFFFFF"/> 
-                <p>Penjualan</p>
-                </>
-              </Link>
-            </Card>
-            <Card className="input-sales">
-                <Link to="/stok">
-                <>
-                <Icon icon="ion:person" className="icon-dashboard" width={27} color="#FFFFFF"/>
-                <p>Input Sales</p>
-                </>
-                </Link>
-            </Card>
-            
+          <Row>
+            <Col>
+              <HomeCard
+                link="/stok/input"
+                content="Input Stok"
+                bgColor="rgba(96, 209, 155, 0.67)"
+                icon="gridicons:add"
+                iconColor="#FFFFFF"
+                iconWidth="25"
+              />
+            </Col>
+            <Col>
+              <HomeCard
+                link="/penjualan/input"
+                content="Penjualan"
+                bgColor="rgba(251, 202, 75, 1)"
+                icon="fa6-solid:rupiah-sign"
+                iconColor="#FFFFFF"
+                iconWidth="25"
+              />
+            </Col>
+            <Col>
+              <HomeCard
+                link="/stok"
+                content="Input Sales"
+                bgColor="rgba(184, 18, 18, 0.62)"
+                icon="ion:person"
+                iconColor="#FFFFFF"
+                iconWidth="25"
+              />
+            </Col>
+          </Row>
         </div>
       </div>
     </div>

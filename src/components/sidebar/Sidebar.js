@@ -36,7 +36,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
         onClick={() => setSidebarOpen(!sidebarOpen)}
         />
       </div>
-      <div className="burgerbutton">
+      <div className={sidebarOpen ? "burgerbuttonOpen" : "burgerbuttonClosed"}>
         <Icon icon="charm:menu-hamburger" className='iconBurger' width={24} 
           onClick={() => setSidebarOpen(!sidebarOpen)}
         />

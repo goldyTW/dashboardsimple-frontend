@@ -11,10 +11,22 @@
   .xbutton{
     display: none;
   }
-  .burgerbutton{
-    cursor: pointer;
+  .burgerbuttonOpen{
     display: block;
     text-align: end;
+
+    .iconBurger {
+      cursor: pointer;
+    }
+  }
+
+  .burgerbuttonClosed{
+    display: block;
+    text-align: center;
+
+    .iconBurger {
+      cursor: pointer;
+    }
   }
 
   .avatar {
@@ -89,7 +101,7 @@
       display: block;
       text-align: end;
     }
-    .burgerbutton{
+    .burgerbuttonOpen{
       display: none;
     }
 

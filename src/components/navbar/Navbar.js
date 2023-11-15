@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import Cookies from 'js-cookie';
 import axios from "axios";
 import moment from "moment";
+require('moment/locale/id'); // Import Indonesian locale data
 
 const Navbar = ({setSidebarOpen, sidebarOpen}) => {
   const [today, setDate] = useState(new Date()); // Save the current date to be able to trigger an update
@@ -25,7 +26,7 @@ const Navbar = ({setSidebarOpen, sidebarOpen}) => {
             <b>Emeste</b> Store System</span>
         </div>
         <div className="col-md-6 text-end month">
-          <span className="navTitle">{(moment(today).format('MMMM YYYY')).toLocaleString('id')}</span>
+          <span className="navTitle">{(moment(today).format('dddd, DD MMMM YYYY')).toLocaleString('id')}</span>
         </div>
     </div>
   );

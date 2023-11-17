@@ -1,7 +1,7 @@
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 // import Cookies from 'js-cookie';
 import dayjs from 'dayjs';

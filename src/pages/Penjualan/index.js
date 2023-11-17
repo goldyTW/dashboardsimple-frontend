@@ -180,7 +180,7 @@ const Penjualan = () => {
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
         <div className="row"> 
           <div className="col-12 col-md-6 align-self-center">     
-            <h1 className="pageTitle mt-xl-3 mt-5">Penjualan</h1>
+            <h1 className="pageTitle mt-xl-3 mt-5"><b>Penjualan</b></h1>
           </div>  
           <div className="col-12 col-md-6 text-end pt-xl-2">  
             <Link to={"/penjualan/input"}> 

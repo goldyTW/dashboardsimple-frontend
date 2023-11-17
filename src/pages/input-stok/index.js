@@ -1,14 +1,17 @@
 import "./style.scss";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Cookies from 'js-cookie';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Input, DatePicker, Space, Radio, Button } from 'antd';
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
 const InputStok = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [no_faktur, setNoFaktur] = useState();
   const [kode_barang, setKodeBarang] = useState();
   const [color_way, setColorWay] = useState();
@@ -63,108 +66,125 @@ const InputStok = () => {
   }
   return (
     <div className="main">
-      <div className="wrapper">
-        <p className="pageTitle">Input <b>Stok Barang</b></p>
-        <div className="card pt-4 pb-4">
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Nomor Faktur</p>
-            <Input 
-              className="py-2"
-              placeholder="Nomor Faktur"
-              style={{ width:"100%", height: "32.19px" }}
-              value={no_faktur}
-              onChange={(e)=>setNoFaktur(e.target.value)}
-              />
+      <div className={sidebarOpen ? "mainSideLayoutFull" : "mainSideLayoutNotFull" }>
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}></Sidebar>
+      </div>
+      <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
+        <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+        <div className="row mt-5">
+          <div className="col-12 col-md-6 breadcrumbs">   
+            <Link to="/stok"><span>Stok</span></Link> <span>{'>>'}</span> <span>Input</span>
           </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Kode Barang</p>
-            <Input 
-              className="py-2"
-              placeholder="Kode Barang"
-              style={{ width:"100%", height: "32.19px" }}
-              value={kode_barang}
-              onChange={(e)=>setKodeBarang(e.target.value)}
-              />
-          </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Color Way</p>
-            <Input 
-              className="py-2"
-              placeholder="Color Way"
-              style={{ width:"100%", height: "32.19px" }}
-              value={color_way}
-              onChange={(e)=>setColorWay(e.target.value)}
-              />
-          </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Harga Beli</p>
-            <Input 
-              className="py-2"
-              placeholder="Harga Beli"
-              style={{ width:"100%", height: "32.19px" }}
-              value={harga_beli}
-              onChange={(e)=>setHargaBeli(e.target.value)}
-              />
-          </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Harga Jual</p>
-            <Input 
-              className="py-2"
-              placeholder="Harga Jual"
-              style={{ width:"100%", height: "32.19px" }}
-              value={harga_jual}
-              onChange={(e)=>setHargaJual(e.target.value)}
-              />
-          </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Nama Barang</p>
-            <Input 
-              className="py-2"
-              placeholder="Nama Barang"
-              style={{ width:"100%", height: "32.19px" }}
-              value={nama_barang}
-              onChange={(e)=>setNamaBarang(e.target.value)}
-              />
-          </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Design</p>
-            <Input 
-              className="py-2"
-              placeholder="Design"
-              style={{ width:"100%", height: "32.19px" }}
-              value={design}
-              onChange={(e)=>setDesign(e.target.value)}
-              />
-          </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Jumlah Masuk</p>
-            <Input 
-              className="py-2"
-              placeholder="Jumlah Masuk"
-              style={{ width:"100%", height: "32.19px" }}
-              value={jumlah_masuk}
-              onChange={(e)=>setJumlahMasuk(e.target.value)}
-              />
-          </div>
-          <div className="col-md-8 col-10 py-2 px-4" style={{width: "100%"}}>
-            <p className="left-align">Note</p>
-            <Input 
-              className="py-2"
-              placeholder="Note"
-              style={{ width:"100%", height: "32.19px" }}
-              value={note}
-              onChange={(e)=>setNote(e.target.value)}
-              />
-          </div>
-          {
-          !loading ? 
-            <Button className="submit" type="primary" size="large" onClick={() => handleInputStok()}>Submit!</Button>
-            :
-            <div className='spiner'>
-              <div className="loading-spinner"></div> <div className='ms-1' 
-                style={{fontFamily:'Inter', color: '#606060'}}>Mohon Tunggu</div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-6 align-self-center text-center">     
+            <h1 className="pageTitle mt-3">Input <b>Stok</b></h1>
+          </div>  
+          <div className="card col-md-10 col-12">
+            <div className="row justify-content-center">
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Nomor Faktur</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Nomor Faktur"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={no_faktur}
+                  onChange={(e)=>setNoFaktur(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Kode Barang</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Kode Barang"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={kode_barang}
+                  onChange={(e)=>setKodeBarang(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Color Way</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Color Way"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={color_way}
+                  onChange={(e)=>setColorWay(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Harga Beli</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Harga Beli"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={harga_beli}
+                  onChange={(e)=>setHargaBeli(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Harga Jual</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Harga Jual"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={harga_jual}
+                  onChange={(e)=>setHargaJual(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Nama Barang</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Nama Barang"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={nama_barang}
+                  onChange={(e)=>setNamaBarang(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Design</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Design"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={design}
+                  onChange={(e)=>setDesign(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Jumlah Masuk</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Jumlah Masuk"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={jumlah_masuk}
+                  onChange={(e)=>setJumlahMasuk(e.target.value)}
+                  />
+              </div>
+              <div className="col-md-6 col-10 px-3 py-2">
+                <p className="left-align">Note</p>
+                <Input 
+                  className="py-2"
+                  placeholder="Note"
+                  // style={{ width:"100%", height: "32.19px" }}
+                  value={note}
+                  onChange={(e)=>setNote(e.target.value)}
+                  />
+              </div>
             </div>
-          }
+            <div className="col-md-12 col-10 py-2 px-4 text-center">
+            {
+            !loading ? 
+              <Button className="submit" type="primary" size="large" onClick={() => handleInputStok()}>Tambah</Button>
+              :
+              <div className='spiner'>
+                <div className="loading-spinner"></div> <div className='ms-1' 
+                  style={{fontFamily:'Inter', color: '#606060'}}>Mohon Tunggu</div>
+              </div>
+            }
+            </div>
+          </div>
         </div>
       </div>
     </div>

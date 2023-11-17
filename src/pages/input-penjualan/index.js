@@ -9,6 +9,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Input, DatePicker, Space, Radio, Button, Select } from 'antd';
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
+import moment from "moment";
 
 const InputPenjualan = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,15 +18,22 @@ const InputPenjualan = () => {
   const [qty, setQty] = useState();
   const [hargaJual, setHargaJual] = useState();
   const totalHarga = qty * hargaJual
+  // const [jumlah, setJumlah] = useState();
   const [customer, setCustomer] = useState();
   const [alamat, setAlamat] = useState();
   const [tglTransaksi, setTglTransaksi] = useState();
   const [tglKirim, setTglKirim] = useState();
   const [sales, setSales] = useState();
   const [tempoBtn, setTempoBtn] = useState(1);
-  const [tempo, setTempo] = useState();
+  const [tempo, setTempo] = useState("0");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Mengambil data dari Axios untuk Select
+  const [dataBarang, setDataBarang] = useState();
+  const [dataCustomer, setDataCustomer] = useState();
+  const [dataSales, setDataSales] = useState();
+
   dayjs.extend(customParseFormat);
   const dateFormat = 'YYYY/MM/DD';
   
@@ -42,6 +50,7 @@ const InputPenjualan = () => {
   //Fitur Select
   const onChange = (value, label) => {
     console.log(`selected ${value} with name ${label.label}`);
+    setCustomer(value)
     axios.get(`${url}/listcustomer`)
       .then(res => {
         // console.log(res) // buat liat return datanya
@@ -73,10 +82,13 @@ const InputPenjualan = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // if(!Cookies.get('user-data')){
+        //   navigate('/login', { replace: true });
+        // }
         // ambil list barang
         const barangResponse = await axios.get(`${url}/listbarang/listbarang`);
         // console.log(barangResponse.data);
-        setBarang(barangResponse.data.map(item => ({
+        setDataBarang(barangResponse.data.map(item => ({
           value: item.id_barang,
           label: item.nama_barang,
         })));
@@ -84,7 +96,7 @@ const InputPenjualan = () => {
         // ambil list customer
         const customerResponse = await axios.get(`${url}/listcustomer`);
         // console.log(customerResponse.data);
-        setCustomer(customerResponse.data.map(item => ({
+        setDataCustomer(customerResponse.data.map(item => ({
           value: item.id_customer,
           label: item.nama,
         })));
@@ -94,7 +106,7 @@ const InputPenjualan = () => {
           timeout: 10000,
         });
         // console.log(salesResponse.data);
-        setSales(salesResponse.data.map(item => ({
+        setDataSales(salesResponse.data.map(item => ({
           value: item.id_sales,
           label: item.nama,
         })));
@@ -136,7 +148,41 @@ const InputPenjualan = () => {
         setLoading(false)
         toast.error("Tempo tidak boleh kosong")
       } else {
-          navigate('/', {replace: true});
+        navigate('/penjualan', {replace: true});
+        const dataTglTransaksi = tglTransaksi.format('YYYY-MM-DD HH:mm:ss')
+        const dataTglKirim = tglKirim.format('YYYY-MM-DD HH:mm:ss')
+        axios.post(`${url}/penjualan/create`, {
+          id_barang: barang,
+          jumlah: qty,
+          potongan: 0,
+          total: totalHarga,
+          id_customer: customer,
+          waktu_penjualan: dataTglTransaksi,
+          waktu_pengiriman: dataTglKirim,
+          id_sales: sales,
+          status_kirim: "PENDING",
+          id_user: "1",
+          tempo: tempo
+        },  {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }) 
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.error(error.response.data);
+        });
+          console.log(barang)
+          console.log(qty)
+          console.log(hargaJual)
+          console.log(totalHarga)
+          console.log(customer)
+          console.log(tglKirim.format('YYYY-MM-DD HH:mm:ss'))
+          console.log(tglTransaksi.format('YYYY-MM-DD HH:mm:ss'))
+          console.log(sales)
+          console.log(tempo)
       }
   }
   return (
@@ -159,13 +205,14 @@ const InputPenjualan = () => {
                 placeholder="Barang"
                 optionFilterProp="children"
                 style={{ width:"100%" }}
-                // onChange={onChange}
                 onSearch={onSearch}
                 filterOption={filterOption}
                 filterSort={(optionA, optionB) =>
                   (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                 }
-                options={barang}
+                options={dataBarang}
+                value={barang}
+                onChange={(value, label) => setBarang(value)}
                 />
             </div>
             <div className="col-md-6 col-10 px-3 py-2">
@@ -173,6 +220,7 @@ const InputPenjualan = () => {
               <Input 
                 className="py-2"
                 placeholder="Qty"
+                type="number"
                 // style={{ width:"100%", height: "32.19px" }}
                 value={qty}
                 onChange={(e)=>setQty(e.target.value)}
@@ -185,6 +233,7 @@ const InputPenjualan = () => {
               <Input 
                 className="py-2"
                 placeholder="Harga"
+                type="number"
                 // style={{ width:"100%", height: "32.19px" }}
                 value={hargaJual}
                 onChange={(e)=>setHargaJual(e.target.value)}
@@ -214,7 +263,8 @@ const InputPenjualan = () => {
                 filterSort={(optionA, optionB) =>
                   (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                 }
-                options={customer}
+                options={dataCustomer}
+                value={customer}
                 />
             </div>
             <div className="col-md-6 col-10 py-2 px-3">
@@ -261,7 +311,7 @@ const InputPenjualan = () => {
               <p className="left-align">Sales</p>
               <Select 
                 showSearch
-                placeholder="Barang"
+                placeholder="Nama Sales"
                 optionFilterProp="children"
                 style={{ width:"100%" }}
                 onSearch={onSearch}
@@ -269,7 +319,9 @@ const InputPenjualan = () => {
                 filterSort={(optionA, optionB) =>
                   (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                 }
-                options={sales}
+                options={dataSales}
+                value={sales}
+                onChange={(value, label) => setSales(value)}
                 />
             </div>
             <div className="col-md-6 col-10 py-2 px-3">
@@ -281,14 +333,16 @@ const InputPenjualan = () => {
               {isTempoDisable ? (
                 <Input 
                   className="py-2"
+                  type="number"
                   placeholder=""
                   style={{ display: "none" }}
                   value={tempo}
-                  onChange={(e)=>setTempo(e.target.value)}
+                  // onChange={(e) => setTempo(e.target.value)}
                   />
               ) : (
                 <Input 
                   className="py-2"
+                  type="number"
                   placeholder=""
                   value={tempo}
                   onChange={(e)=>setTempo(e.target.value)}

@@ -19,16 +19,34 @@ const InputStok = () => {
   const [jumlah_masuk, setJumlahMasuk] = useState();
   const [note, setNote] = useState();
   const [loading, setLoading] = useState(false);
+
+  // ambil list barang
+  const [kodeBarang, setKodeBarang] = useState()
   const navigate = useNavigate();
   dayjs.extend(customParseFormat);
   const dateFormat = 'YYYY/MM/DD';
   let url = process.env.REACT_APP_API_URL;
   const data = {no_faktur, kode_barang, color_way, harga_beli, harga_jual, nama_barang, design, jumlah_masuk, note}
   
+
   useEffect(() => {
-      // if(!Cookies.get('user-data')){
-      //   navigate('/login', { replace: true });
-      // }
+      const fetchData = async () => {
+      try {
+        // if(!Cookies.get('user-data')){
+        //   navigate('/login', { replace: true });
+        // }
+        // ambil list barang
+        const kodeBarangResponse = await axios.get(`${url}/listbarang/listbarang`);
+        // console.log(barangResponse.data);
+        setKodeBarang(kodeBarangResponse.data.map(item => ({
+          value: item.id_barang,
+          label: item.kode,
+        })));
+      } catch {
+        console.error('Error fetching data:', error);
+      }
+      fetchData()
+      }
   }, [])
   
   function handleInputStok() {
@@ -59,6 +77,29 @@ const InputStok = () => {
         toast.error("Jumlah Masuk tidak boleh kosong")
       } else {
           navigate('/', {replace: true});
+          axios.post(`${url}/barang/create`, {
+            id_barang: barang,
+            jumlah: qty,
+            potongan: 0,
+            total: totalHarga,
+            id_customer: customer,
+            waktu_penjualan: dataTglTransaksi,
+            waktu_pengiriman: dataTglKirim,
+            id_sales: sales,
+            status_kirim: "PENDING",
+            id_user: "1",
+            tempo: tempo
+          },  {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }) 
+          .then(function (response) {
+            console.log(response.data);
+          })
+          .catch(function (error) {
+            console.error(error.response.data);
+          });
       }
   }
   return (
@@ -67,6 +108,16 @@ const InputStok = () => {
         <p className="pageTitle">Input <b>Stok Barang</b></p>
         <div className="card col-md-10 col-12">
           <div className="row justify-content-center">
+            <div className="col-md-6 col-10 px-3 py-2">
+              <p className="left-align">Nama Barang</p>
+              <Input 
+                className="py-2"
+                placeholder="Nama Barang"
+                style={{ width:"100%", height: "32.19px" }}
+                value={nama_barang}
+                onChange={(e)=>setNamaBarang(e.target.value)}
+                />
+            </div>
             <div className="col-md-6 col-10 px-3 py-2">
               <p className="left-align">Nomor Faktur</p>
               <Input 
@@ -115,16 +166,6 @@ const InputStok = () => {
                 style={{ width:"100%", height: "32.19px" }}
                 value={harga_jual}
                 onChange={(e)=>setHargaJual(e.target.value)}
-                />
-            </div>
-            <div className="col-md-6 col-10 px-3 py-2">
-              <p className="left-align">Nama Barang</p>
-              <Input 
-                className="py-2"
-                placeholder="Nama Barang"
-                style={{ width:"100%", height: "32.19px" }}
-                value={nama_barang}
-                onChange={(e)=>setNamaBarang(e.target.value)}
                 />
             </div>
             <div className="col-md-6 col-10 px-3 py-2">

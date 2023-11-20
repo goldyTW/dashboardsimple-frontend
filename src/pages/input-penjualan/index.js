@@ -192,6 +192,11 @@ const InputPenjualan = () => {
     </div>
     <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull" }>
       <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+      <div className="row mt-5">
+          <div className="col-12 col-md-6 breadcrumbs">   
+            <Link to="/penjualan"><span>Penjualan</span></Link> <span>{'>>'}</span> <span>Input</span>
+          </div>
+        </div>
       <div className="row justify-content-center">
       <div className="col-12 col-md-6 align-self-center">     
             <h1 className="pageTitle mt-5 text-center">Input Penjualan</h1>

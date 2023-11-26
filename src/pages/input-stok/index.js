@@ -78,9 +78,9 @@ const InputStok = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // if(!Cookies.get('user-data')){
-        //   navigate('/login', { replace: true });
-        // }
+        if(!Cookies.get('user-data')){
+          navigate('/login', { replace: true });
+        }
         // ambil list barang
         const BarangResponse = await axios.get(`${url}/listbarang/listbarang`);
         // console.log(barangResponse.data);
@@ -122,7 +122,7 @@ const InputStok = () => {
         setLoading(false)
         toast.error("Jumlah Masuk tidak boleh kosong")
       } else {
-        navigate('/', {replace: true});
+        // navigate('/', {replace: true});
         const postData = async () => {
           try {
             const responseBarang = await axios.post(`${url}/barang/create`, {

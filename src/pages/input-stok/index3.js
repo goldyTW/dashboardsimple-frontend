@@ -10,7 +10,7 @@ import { Input, DatePicker, Space, Radio, Button } from 'antd';
 
 const InputStok = () => {
   const [no_faktur, setNoFaktur] = useState();
-  const [kode_barang, setKodeBarang] = useState();
+  const [kode_barang, setKode_Barang] = useState();
   const [color_way, setColorWay] = useState();
   const [harga_beli, setHargaBeli] = useState();
   const [harga_jual, setHargaJual] = useState();

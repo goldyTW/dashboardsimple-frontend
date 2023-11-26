@@ -9,7 +9,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { Input, Card } from 'antd';
 import { Icon } from "@iconify/react";
 import HomeCard from "../../components/Cards/HomeCard";
-import Row from 'react-bootstrap/Row';
+// import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const Home = () => {
@@ -32,7 +32,6 @@ const Home = () => {
       <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull"}>
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="dashboard">
-          <Row>
             <Col>
               <HomeCard
                 link="/stok/input"
@@ -63,7 +62,6 @@ const Home = () => {
                 iconWidth="25"
               />
             </Col>
-          </Row>
         </div>
       </div>
     </div>

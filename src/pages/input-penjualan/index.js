@@ -370,7 +370,6 @@ const InputPenjualan = () => {
         </div>
       </div>
     </div>
-    </div>
   )
 }
 

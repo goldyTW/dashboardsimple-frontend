@@ -52,7 +52,7 @@ const Stok = () => {
     })
   }, [])
 
-  function handlePrint(id){
+  function handleDelete(id){
     
   }
   function handleOpen(opt, record){
@@ -141,7 +141,7 @@ const Stok = () => {
               className='me-1' color="#0A6294" style={{cursor:'pointer'}} width={18}/> 
             {/* </div> */}
             {/* <div className="deleteButton"> */}
-              <Icon onClick={() => handlePrint(record.id_device)} icon="ph:printer-fill" 
+              <Icon onClick={() => handleDelete(record.id_device)} icon="ic:baseline-delete" 
               className='ms-1' color="#B81212" style={{cursor:'pointer'}} width={18}/> 
             {/* </div> */}
           </div>

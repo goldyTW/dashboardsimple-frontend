@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import Stok from "./pages/Stok";
 import Penjualan from "./pages/Penjualan";
-// import Dashboard from "./pages/Dashboard";
 import InputStok from "./pages/input-stok";
 import InputPenjualan from "./pages/input-penjualan";
 import InputSuratJalan from "./pages/input-surat-jalan";

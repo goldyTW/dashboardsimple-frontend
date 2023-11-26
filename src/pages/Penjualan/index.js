@@ -16,40 +16,47 @@ const Penjualan = () => {
   const last = location.pathname.split("/")
   const active = last[1];
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loading, setloading] = useState(false);
-  const [data, setdata] = useState([])  //variabel
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([])  //variabel
   const navigate = useNavigate();
   let url = process.env.REACT_APP_API_URL ; //variable
 
-  const penjualan = [
-    {
-      nama_barang:'kain pramuka',
-      tanggal_penjualan:'10-10-23',
-      tanggal_pengiriman:'12-10-23',
-      jumlah:3000000,
-      customer:'Pak Haji',
-      alamat:'blok a pasar tanah abang',
-      tempo:30,
-      status_kirim:'PENDING',
-      sales:'hamdan',
-    }
-  ]
+  // const penjualan = [
+  //   {
+  //     nama_barang:'kain pramuka',
+  //     tanggal_penjualan:'10-10-23',
+  //     tanggal_pengiriman:'12-10-23',
+  //     jumlah:3000000,
+  //     customer:'Pak Haji',
+  //     alamat:'blok a pasar tanah abang',
+  //     tempo:30,
+  //     status_kirim:'PENDING',
+  //     sales:'hamdan',
+  //   }
+  // ]
 
   useEffect(() => {
     // if(!Cookies.get('user-data')){
     //   navigate('/login', { replace: true });
     // }
-    // axios.get(`${url}/merchant`,{
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer '+Cookies.get('token') ,
-    //   },
-    // })
-    // .then(res => {
-    //     // console.log(res) //buat liat return datanya
-    //     // setLoading(false)
-    //     // setData(res.data.data)
-    //   })
+    axios.get(`${url}/listpenjualan/listpenjualan`)
+    .then(res => {
+        console.log(res.data) //buat liat return datanya
+        setData(res.data.map(item => ({
+          nama_barang: item.nama_barang,
+          waktu_penjualan: item.waktu_penjualan,
+          waktu_pengiriman: item.waktu_pengiriman,
+          jumlah: item.total,
+          customer: item.customer,
+          alamat: item.alamat,
+          tempo: item.tempo,
+          status_kirim: item.status_kirim,
+          sales: item.sales,
+        })))
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    })
   }, [])
 
   function handlePrint(id){
@@ -186,7 +193,7 @@ const Penjualan = () => {
            !loading ? 
            <Table
             columns={columnPenjualan}
-            dataSource={penjualan}
+            dataSource={data}
             pagination={false}
             // scroll={{ y: 460, x:1000 }}
             // defaultSortOrder= 'descend'

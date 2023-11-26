@@ -16,6 +16,7 @@ const Stok = () => {
   const last = location.pathname.split("/")
   const active = last[1];
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [data, setData] = useState([]);
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   let url = process.env.REACT_APP_API_URL ;
@@ -33,9 +34,22 @@ const Stok = () => {
   ]
 
   useEffect(() => {
-    // if(!Cookies.get('user-data')){
-    //   navigate('/login', { replace: true });
-    // }
+    axios.get(`${url}/listbarang/listbarang`)
+    .then(res => {
+        console.log(res.data) //buat liat return datanya
+        setData(res.data.map(item => ({
+          nama_barang: item.nama_barang,
+          harga_beli: item.harga_beli,
+          harga_jual: item.harga_jual,
+          jumlah: item.jumlah,
+          batas_stok: item.batas_stok,
+          waktu_masuk: item.tanggal_masuk,
+          supplier: item.nama_supplier
+        })))
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error.data);
+    })
   }, [])
 
   function handlePrint(id){
@@ -68,7 +82,7 @@ const Stok = () => {
       align:'center',
       width: 100,
       sorter:(a,b) => a.harga_beli - b.harga_beli,
-      render: ((_, record) =>(record.harga_beli).toLocaleString('id') )
+      render: ((_, record) =>(record.harga_beli) )
     },
     {
       dataIndex: "harga_jual",
@@ -77,7 +91,7 @@ const Stok = () => {
       align:'center',
       width: 100,
       sorter:(a,b) => a.harga_jual - b.harga_jual,
-      render: ((_, record) => (record.harga_jual).toLocaleString('id') )
+      render: ((_, record) => (record.harga_jual.toLocaleString('id')) )
     },
     {
       dataIndex: "jumlah",
@@ -104,7 +118,7 @@ const Stok = () => {
       align:'center',
       width: 100,
       sorter:(a,b) => a.waktu_masuk - b.waktu_masuk,
-      render: ((_, record) => (record.waktu_masuk).toLocaleString('id') )
+      render: ((_, record) => ( moment(record.waktu_masuk).format('DD-MM-YY') ))
     },
     {
       dataIndex: "supplier",
@@ -113,28 +127,27 @@ const Stok = () => {
       align:'center',
       width: 100,
       sorter: (a, b) => a.supplier - b.supplier,
-      render:((_, record) => (record.supplier).toLocaleString('id'))
-    }
-    // {
-    //   field: "action",
-    //   title: "Action",
-    //   width: 80,
-    //   align:'center',
-    //   render: (_, record) => {
-    //     return (
-    //       <div className="cellAction">
-    //         {/* <div className="editButton"> */}
-    //         <Icon onClick={() => handleOpen('edit', record)} icon="heroicons:pencil-solid" 
-    //           className='me-1' color="#0A6294" style={{cursor:'pointer'}} width={18}/> 
-    //         {/* </div> */}
-    //         {/* <div className="deleteButton"> */}
-    //           <Icon onClick={() => handlePrint(record.id_device)} icon="ph:printer-fill" 
-    //           className='ms-1' color="#B81212" style={{cursor:'pointer'}} width={18}/> 
-    //         {/* </div> */}
-    //       </div>
-    //     );
-    //   },
-    // },
+    },
+    {
+      field: "action",
+      title: "Action",
+      width: 80,
+      align:'center',
+      render: (_, record) => {
+        return (
+          <div className="cellAction">
+            {/* <div className="editButton"> */}
+            <Icon onClick={() => handleOpen('edit', record)} icon="heroicons:pencil-solid" 
+              className='me-1' color="#0A6294" style={{cursor:'pointer'}} width={18}/> 
+            {/* </div> */}
+            {/* <div className="deleteButton"> */}
+              <Icon onClick={() => handlePrint(record.id_device)} icon="ph:printer-fill" 
+              className='ms-1' color="#B81212" style={{cursor:'pointer'}} width={18}/> 
+            {/* </div> */}
+          </div>
+        );
+      },
+    },
   ];
 
   return (
@@ -159,7 +172,7 @@ const Stok = () => {
            !loading ? 
            <Table
             columns={columnStok}
-            dataSource={stok}
+            dataSource={data}
             pagination={false}
             // scroll={{ y: 460, x:1000 }}
             // defaultSortOrder= 'descend'

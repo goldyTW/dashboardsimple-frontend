@@ -21,22 +21,9 @@ const Stok = () => {
   const navigate = useNavigate();
   let url = process.env.REACT_APP_API_URL ;
 
-  const stok = [
-    {
-      nama_barang:'kain pramuka',
-      harga_beli:20_000,
-      harga_jual:25_000,
-      jumlah:220,
-      batas_stok:100,
-      waktu_masuk:'12-10-23', //MM DD YY
-      supplier:'Exatex'
-    }
-  ]
-
   useEffect(() => {
     axios.get(`${url}/listbarang/listbarang`)
     .then(res => {
-        console.log(res.data) //buat liat return datanya
         setData(res.data.map(item => ({
           nama_barang: item.nama_barang,
           harga_beli: item.harga_beli,
@@ -120,14 +107,14 @@ const Stok = () => {
       sorter:(a,b) => a.waktu_masuk - b.waktu_masuk,
       render: ((_, record) => ( moment(record.waktu_masuk).format('DD-MM-YY') ))
     },
-    {
-      dataIndex: "supplier",
-      title: "Supplier",
-      sortDirections: ['ascend', 'descend'],
-      align:'center',
-      width: 100,
-      sorter: (a, b) => a.supplier - b.supplier,
-    },
+    // {
+    //   dataIndex: "supplier",
+    //   title: "Supplier",
+    //   sortDirections: ['ascend', 'descend'],
+    //   align:'center',
+    //   width: 100,
+    //   sorter: (a, b) => a.supplier - b.supplier,
+    // },
     {
       field: "action",
       title: "Action",
@@ -174,7 +161,7 @@ const Stok = () => {
             columns={columnStok}
             dataSource={data}
             pagination={false}
-            // scroll={{ y: 460, x:1000 }}
+            // scroll={{ y: 380 }}
             // defaultSortOrder= 'descend'
             bordered
             size='small'

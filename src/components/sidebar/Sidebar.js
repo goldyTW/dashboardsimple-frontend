@@ -11,7 +11,6 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
   const active =  last[1];
   const [user_type, setuser_type] = useState()
   const [userName, setUserName] = useState('');
-  const [role, setrole] = useState('admin');
   const [profileImg, setprofileImg] = useState("https://picsum.photos/id/29/200");
   const navigate = useNavigate();
 
@@ -19,6 +18,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
     if(Cookies.get('user-data')){
       let user = JSON.parse(Cookies.get('user-data'));
       setUserName(user.username)
+      setuser_type(user.role)
     }
   }, []);
 
@@ -48,7 +48,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
         className={sidebarOpen ? "avatar mt-5" : "avatarSmall mt-5"}
       />
       <div className="nameDisplay mt-2 mb-1">{sidebarOpen ? userName : userName.split('')[0 ]}</div>
-      <div className="roleDisplay mt-1 mb-4">{role}</div>
+      <div className="roleDisplay mt-1 mb-4">{user_type}</div>
       <a className="logoutBtn px-3 py-2 mt-4" onClick={()=>handleLogout()}>
         <Icon icon="quill:off" className='align-self-center mx-1' width={18}/>
           {sidebarOpen ? 'Sign Out' : ''}
@@ -57,7 +57,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
       <div className="mt-5 menu">
       {/* style={{display:!sidebarOpen ? 'none' : ''}} */}
         {
-          // (user_type != 12 && user_type != 9 && user_type != 2) &&
+          // user_type != 'admin' &&
           <>
           <Link to="/">
           <div className={active == "" ? "menuItem active" : 'menuItem'}>

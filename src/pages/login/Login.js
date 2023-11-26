@@ -41,12 +41,15 @@ const Login = () => {
       .then(res => {
         if(res.status == 200){
           toast.success('Login Berhasil');
-          Cookies.set('token', res.data.data.token)
-          Cookies.set('user-data', JSON.stringify(res.data.data))
+          Cookies.set('token', res.data.access_token)
+          Cookies.set('user-data', JSON.stringify(res.data))
           navigate('/', { replace: true });
         }
-        else if(res.status == "Error"){
-          toast.error(res.message)
+        else if(res.status == 404){
+          toast.error('Invalid username or password')
+        }
+        else if(res.status == 409){
+          toast.error('Conflict with existing account')
         }
       })
       .catch(function (error) {

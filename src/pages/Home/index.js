@@ -15,9 +15,9 @@ const Home = () => {
   let url = process.env.REACT_APP_API_URL ;
 
   useEffect(() => {
-    // if(!Cookies.get('user-data')){
-    //   navigate('/login', { replace: true });
-    // }
+    if(!Cookies.get('user-data')){
+      navigate('/login', { replace: true });
+    }
   }, [])
 
 

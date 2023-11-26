@@ -31,23 +31,19 @@ const Login = () => {
       toast.error("Password tidak boleh kosong")
     }
     else{
-      navigate('/', { replace: true });
       axios.post(`${url}/auth/login`,data,
       {
         headers: {
           'Content-Type': 'application/json',
           Accept:'application/json'
         },
-      }
-      )
+      })
       .then(res => {
         if(res.status == 200){
           toast.success('Login Berhasil');
           Cookies.set('token', res.data.data.token)
           Cookies.set('user-data', JSON.stringify(res.data.data))
-          navigate(res.data.data.id_dc_group_user == 12 ? '/koordinator-jukir' : 
-          res.data.data.id_dc_group_user == 9 ? '/pemakaian-mesin' :
-          '/', { replace: true });
+          navigate('/', { replace: true });
         }
         else if(res.status == "Error"){
           toast.error(res.message)

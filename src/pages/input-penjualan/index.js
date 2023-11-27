@@ -175,15 +175,6 @@ const InputPenjualan = () => {
         .catch(function (error) {
           console.error(error.response.data);
         });
-          console.log(barang)
-          console.log(qty)
-          console.log(hargaJual)
-          console.log(totalHarga)
-          console.log(customer)
-          console.log(tglKirim.format('YYYY-MM-DD HH:mm:ss'))
-          console.log(tglTransaksi.format('YYYY-MM-DD HH:mm:ss'))
-          console.log(sales)
-          console.log(tempo)
       }
   }
 
@@ -337,13 +328,16 @@ const InputPenjualan = () => {
                     <Radio value={1}>Cash</Radio>
                     <Radio value={2}>Tempo</Radio>
                   </Radio.Group>
-                  <Input 
+                  {
+                    tempoBtn == 2 && 
+                    <Input 
                     className="py-2"
                     placeholder=""
                     // style={{ width:"100%", height: "32.19px" }}
                     value={tempo}
                     onChange={(e)=>setTempo(e.target.value)}
                     />
+                  }
                 </div>
               </div>
             </div>
@@ -358,15 +352,6 @@ const InputPenjualan = () => {
                 <div className='col-lg-1 py-3' style={{border:'0.5px solid #d0d0d0', backgroundColor:'#f8f8f8', borderRadius:'0 10px 0 0'}}>Action</div>
               </div>
           </div>
-          {
-          !loading ? 
-            <Button className="submit" type="primary" size="large" onClick={() => handleInputPenjualan()}>Tambah</Button>
-            :
-            <div className='spiner'>
-              <div className="loading-spinner"></div> <div className='ms-1' 
-                style={{fontFamily:'Inter', color: '#606060'}}>Mohon Tunggu</div>
-            </div>
-          }
         </div>
       </div>
     </div>

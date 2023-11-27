@@ -107,34 +107,34 @@ const Stok = () => {
       sorter:(a,b) => a.waktu_masuk - b.waktu_masuk,
       render: ((_, record) => ( moment(record.waktu_masuk).format('DD-MM-YY') ))
     },
-    // {
-    //   dataIndex: "supplier",
-    //   title: "Supplier",
-    //   sortDirections: ['ascend', 'descend'],
-    //   align:'center',
-    //   width: 100,
-    //   sorter: (a, b) => a.supplier - b.supplier,
-    // },
     {
-      field: "action",
-      title: "Action",
-      width: 80,
+      dataIndex: "supplier",
+      title: "Supplier",
+      sortDirections: ['ascend', 'descend'],
       align:'center',
-      render: (_, record) => {
-        return (
-          <div className="cellAction">
-            {/* <div className="editButton"> */}
-            <Icon onClick={() => handleOpen('edit', record)} icon="heroicons:pencil-solid" 
-              className='me-1' color="#0A6294" style={{cursor:'pointer'}} width={18}/> 
-            {/* </div> */}
-            {/* <div className="deleteButton"> */}
-              <Icon onClick={() => handleDelete(record.id_device)} icon="ic:baseline-delete" 
-              className='ms-1' color="#B81212" style={{cursor:'pointer'}} width={18}/> 
-            {/* </div> */}
-          </div>
-        );
-      },
+      width: 100,
+      sorter: (a, b) => a.supplier - b.supplier,
     },
+    // {
+    //   field: "action",
+    //   title: "Action",
+    //   width: 80,
+    //   align:'center',
+    //   render: (_, record) => {
+    //     return (
+    //       <div className="cellAction">
+    //         {/* <div className="editButton"> */}
+    //         <Icon onClick={() => handleOpen('edit', record)} icon="heroicons:pencil-solid" 
+    //           className='me-1' color="#0A6294" style={{cursor:'pointer'}} width={18}/> 
+    //         {/* </div> */}
+    //         {/* <div className="deleteButton"> */}
+    //           <Icon onClick={() => handleDelete(record.id_device)} icon="ic:baseline-delete" 
+    //           className='ms-1' color="#B81212" style={{cursor:'pointer'}} width={18}/> 
+    //         {/* </div> */}
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
 
   return (
@@ -161,7 +161,7 @@ const Stok = () => {
             columns={columnStok}
             dataSource={data}
             pagination={false}
-            // scroll={{ y: 380 }}
+            scroll={{ y: 380 }}
             // defaultSortOrder= 'descend'
             bordered
             size='small'

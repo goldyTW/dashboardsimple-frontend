@@ -14,13 +14,14 @@ export default function HomeCard({
   iconColor = "",
 }) {
   return (
-    <Link to={link}>
-      <Card className="homeCard hover-border-11" style={{ backgroundColor: `${bgColor}` }}>
-        <>
-          <Icon icon={icon} className="icon-dashboard" width={iconWidth} color={iconColor} />
-          <p>{content}</p>
-        </>
+    
+      <Card className="homeCard hover-border-11 text-center m-3 col-lg-3 col-12" style={{ backgroundColor: `${bgColor}` }}>
+        <Link to={link}>
+        <div className='d-flex flex-row text-center'>
+          <Icon icon={icon} className="icon-dashboard text-center" width={iconWidth} color={iconColor} />
+          <p className='text-center'>{content}</p>
+        </div>
+        </Link>
       </Card>
-    </Link>
   )
 }

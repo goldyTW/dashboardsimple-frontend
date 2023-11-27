@@ -9,7 +9,6 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import moment from "moment";
 import { Icon } from "@iconify/react";
-import { render } from "@testing-library/react";
 
 const Penjualan = () => {
   const location = useLocation();
@@ -21,27 +20,12 @@ const Penjualan = () => {
   const navigate = useNavigate();
   let url = process.env.REACT_APP_API_URL ; //variable
 
-  // const penjualan = [
-  //   {
-  //     nama_barang:'kain pramuka',
-  //     tanggal_penjualan:'10-10-23',
-  //     tanggal_pengiriman:'12-10-23',
-  //     jumlah:3000000,
-  //     customer:'Pak Haji',
-  //     alamat:'blok a pasar tanah abang',
-  //     tempo:30,
-  //     status_kirim:'PENDING',
-  //     sales:'hamdan',
-  //   }
-  // ]
-
   useEffect(() => {
-    // if(!Cookies.get('user-data')){
-    //   navigate('/login', { replace: true });
-    // }
+    if(!Cookies.get('user-data')){
+      navigate('/login', { replace: true });
+    }
     axios.get(`${url}/listpenjualan/listpenjualan`)
     .then(res => {
-        console.log(res.data) //buat liat return datanya
         setData(res.data.map(item => ({
           nama_barang: item.nama_barang,
           waktu_penjualan: item.waktu_penjualan,
@@ -62,16 +46,13 @@ const Penjualan = () => {
   function handlePrint(id){
     
   }
-  function handleOpen(opt, record){
-    
-  }
 
   const columnPenjualan= [
     { dataIndex: "No", 
       title: "No", 
       sortDirections: ['ascend', 'descend'],
       align:'center',
-      width: 50,
+      width: 40,
       render: ((value, item, index) => index += 1)
     },
     {
@@ -79,7 +60,7 @@ const Penjualan = () => {
       title: "Nama Barang",
       sortDirections: ['ascend', 'descend'],
       align:'center',
-      width: 150,
+      width: 120,
       sorter: (a, b) => {return a.nama_barang.localeCompare(b.nama_barang)}, //string
     },
     {
@@ -87,7 +68,7 @@ const Penjualan = () => {
       title: "Tanggal Penjualan",
       sortDirections: ['ascend', 'descend'],  // sort nya bisa apa aja
       align:'center',
-      width: 100, //lebar kolom
+      width: 90, //lebar kolom
       sorter:(a,b) => a.waktu_penjualan - b.waktu_penjualan,  //integer atau date
       render: ((_, record) => ( moment(record.waktu_penjualan).format('DD-MM-YY') ))
     },
@@ -96,13 +77,13 @@ const Penjualan = () => {
       title: "Tanggal Pengiriman",
       sortDirections: ['ascend', 'descend'],
       align:'center',
-      width: 100,
+      width: 90,
       sorter:(a,b) => a.waktu_pengiriman - b.waktu_pengiriman,
       render: ((_, record) => ( moment(record.waktu_pengiriman).format('DD-MM-YY') ))
     },
     {
       dataIndex: "jumlah",
-      title: "Jumlah",
+      title: "Jumlah Pembelian",
       sortDirections: ['ascend', 'descend'],
       align:'center',
       width: 100,
@@ -122,7 +103,7 @@ const Penjualan = () => {
       title: "Alamat Kirim",
       sortDirections: ['ascend', 'descend'],
       align:'center',
-      width: 200,
+      width: 150,
     },
     {
       dataIndex: "tempo",
@@ -136,10 +117,10 @@ const Penjualan = () => {
       title: "Status Kirim",
       sortDirections: ['ascend', 'descend'],
       align:'center',
-      width: 100,
+      width: 80,
       sorter: (a, b) => {return a.status_kirim.localeCompare(b.status_kirim)},
       render: ((_, record) => (
-          <span style={{color: (record.status_kirim == "PENDING" ? '#F2A40D' : '#60D19BAB' )}}>{record.status_kirim}</span>
+          <span style={{color: (record.status_kirim == "Pending" ? '#F2A40D' : '#60D19B' )}}>{record.status_kirim}</span>
       ))
     },
     {
@@ -151,20 +132,21 @@ const Penjualan = () => {
     },
     {
       field: "action",
-      title: "Action",
-      width: 80,
+      title: "Surat Jalan",
+      width: 120,
       align:'center',
       render: (_, record) => {
         return (
           <div className="cellAction">
-            {/* <div className="editButton"> */}
-            <Icon onClick={() => handleOpen('edit', record)} icon="heroicons:pencil-solid" 
-              className='me-1' color="#0A6294" style={{cursor:'pointer'}} width={18}/> 
-            {/* </div> */}
-            {/* <div className="deleteButton"> */}
-              <Icon onClick={() => handlePrint(record.id_device)} icon="ph:printer-fill" 
-              className='ms-1' color="#B81212" style={{cursor:'pointer'}} width={18}/> 
-            {/* </div> */}
+            <div className="editButton" onClick={() => handleCreate(record)}>
+              {/* <Icon icon="heroicons:pencil-solid" width={16}/>  */}
+              Buat
+            </div>
+            <div className="printButtonDisabled" onClick={() => handlePrint(record.id_device)}>
+              {/* <Icon icon="ph:printer-fill" width={16}></Icon>  */}
+              Print
+            </div>
+            
           </div>
         );
       },
@@ -195,10 +177,11 @@ const Penjualan = () => {
             columns={columnPenjualan}
             dataSource={data}
             pagination={false}
-            // scroll={{ y: 460, x:1000 }}
+            scroll={{ y: 380 }}
             // defaultSortOrder= 'descend'
             bordered
             size='small'
+            className="tablePenjualan"
             // className="tableDaily virtual-table"
           />
           :

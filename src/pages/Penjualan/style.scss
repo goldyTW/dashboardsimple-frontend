@@ -35,6 +35,7 @@
         margin-right: 2%;
     }
 
+    
     .tambahButton{
         background: #60D19B;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -57,44 +58,97 @@
             color: #60D19B;
         }
     }
+    .cellAction {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .editButton {
+            border-radius: 10px;
+            color: rgb(77, 77, 77);
+            background-color: rgb(173, 211, 255);
+            border: 2px solid rgb(173, 211, 255);
+            cursor: pointer;
+            padding: 4px 8px;
+            font-weight: 600;
+            transition: 0.5s;
+
+            &:hover{
+                background-color: transparent;
+                border: 2px solid rgb(173, 211, 255);
+                color: rgb(173, 211, 255);
+            }
+        }
+
+        .printButton {
+            border-radius: 10px;
+            color: rgb(77, 77, 77);
+            background-color: rgb(255, 185, 173);
+            border: 2px solid rgb(255, 185, 173);
+            cursor: pointer;
+            padding: 4px 8px;
+            font-weight: 600;
+            transition: 0.5s;
+
+            &:hover{
+                background-color: transparent;
+                border: 2px solid rgb(255, 185, 173);
+                color: rgb(255, 185, 173);
+            }
+        }
+
+        .printButtonDisabled{
+            border-radius: 10px;
+            color: rgb(228, 228, 228);
+            background-color: rgb(189, 189, 189);
+            border: 2px solid rgb(189, 189, 189);
+            cursor:not-allowed;
+            padding: 4px 8px;
+          }
+    }
+  
     
     .penjualan-botton {
         display: flex;
         flex-direction: row;
         align-items: center;
     }
-        .penjualan-botton .pageTitle {
-            flex-grow: 2;
-        }
-        .ant-card.ant-card-bordered.input-botton {
-            flex-grow: 1;
-            width: fit-content;
-            height: fit-content;
-            flex-shrink: 0;
-            box-shadow: 1px 2px 10px rgba(64, 64, 64, 0.25);
-            border-color: rgba(96, 209, 155, 0.67);
-            border-radius: 5%;
-            margin: 10px;
-            display: flex;
-            justify-content: center;
-            background-color: rgba(96, 209, 155, 0.67);
-        }
+    .penjualan-botton .pageTitle {
+        flex-grow: 2;
+    }
+    .ant-card.ant-card-bordered.input-botton {
+        flex-grow: 1;
+        width: fit-content;
+        height: fit-content;
+        flex-shrink: 0;
+        box-shadow: 1px 2px 10px rgba(64, 64, 64, 0.25);
+        border-color: rgba(96, 209, 155, 0.67);
+        border-radius: 5%;
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        background-color: rgba(96, 209, 155, 0.67);
+    }
 
-            .ant-card.ant-card-bordered .ant-card-body {
-                display: flex;
-                width: fit-content;
-                justify-content: center;
-                align-items: center;
-                padding: 5px;
-            }
-            .input-botton .ant-card-body p {
-                color: #FFF;
-                margin: 0;
-                font-family: Inter;
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 400;
-            }
+    .ant-card.ant-card-bordered .ant-card-body {
+        display: flex;
+        width: fit-content;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+    .input-botton .ant-card-body p {
+        color: #FFF;
+        margin: 0;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+    }
+
+    .tablePenjualan{
+        font-size: 12px !important;
+    }
 }
 @media(max-width:768px){
     .main{

@@ -15,9 +15,9 @@ const Login = () => {
   const data = {username, password};
 
   useEffect(() => {
-    // if(Cookies.get('user-data')){
-    //   navigate('/', { replace: true });
-    // }
+    if(Cookies.get('user-data')){
+      navigate('/', { replace: true });
+    }
   }, [])
 
   function handleLogin() {

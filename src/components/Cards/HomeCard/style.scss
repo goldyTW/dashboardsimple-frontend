@@ -1,13 +1,14 @@
 .homeCard {
-  display: flex;
-  flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
   justify-content: center;
   border: .1vw solid transparent;
   transition: border-color 0.3s;
   cursor: pointer;
 
   &:hover {
-    border-color: #4169e1;
+    // border-color: #4169e1;
+    box-shadow: 1px 2px 10px rgba(64, 64, 64, 0.25);
   }
 
   @media (max-width: 443px) {

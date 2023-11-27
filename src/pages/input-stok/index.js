@@ -36,17 +36,13 @@ const InputStok = () => {
   const [dataColor, setDataColor] = useState()
 
   const onChange = (value, label) => {
-    console.log(`selected ${value} with name ${label.label}`);
     if(label.label === undefined) {
       setNamaBarang(value)
-      console.log(nama_barang)
     } else {
     setIdBarang(value)
     setNamaBarang(label.label)
-    console.log(nama_barang)
     axios.get(`${url}/listbarang/listbarang`)
       .then(res => {
-        // console.log(res) // buat liat return datanya
         const selectedBarang = res.data.find(item => item.id_barang === Number(value))
 
         if (selectedBarang) {
@@ -76,14 +72,13 @@ const InputStok = () => {
   };
 
   useEffect(() => {
+    if(!Cookies.get('user-data')){
+      navigate('/login', { replace: true });
+    }
     const fetchData = async () => {
       try {
-        if(!Cookies.get('user-data')){
-          navigate('/login', { replace: true });
-        }
         // ambil list barang
         const BarangResponse = await axios.get(`${url}/listbarang/listbarang`);
-        // console.log(barangResponse.data);
         setDataBarang(BarangResponse.data.map(item => ({
           value: item.id_barang.toString(),
           label: item.nama_barang,
@@ -122,7 +117,6 @@ const InputStok = () => {
         setLoading(false)
         toast.error("Jumlah Masuk tidak boleh kosong")
       } else {
-        // navigate('/', {replace: true});
         const postData = async () => {
           try {
             const responseBarang = await axios.post(`${url}/barang/create`, {
@@ -143,13 +137,11 @@ const InputStok = () => {
                 'Content-Type': 'application/json',
               },
             });
-            console.log(responseBarang.data);
 
             if(!id_barang) {
               // ambil id data terbaru untuk barang masuk yang baru
               const idTerbaru = await axios.get(`${url}/listbarang/listbarang`)
               const lastData = idTerbaru.data[idTerbaru.data.length - 1].id_barang;
-              console.log(lastData)
 
               const responseBarangMasuk = await axios.post(`${url}/barang_masuk/create`, {
                 nomor_faktur: no_faktur,
@@ -162,8 +154,13 @@ const InputStok = () => {
                 headers: {
                   'Content-Type': 'application/json',
                 },
+              }).then(res => {
+                if(res.status = 200){
+                  toast.success('Input Stok Berhasil')
+                  navigate('/stok', {replace: true});
+                }
               });
-              console.log(responseBarangMasuk);
+              
             } else {
               const responseBarangMasuk = await axios.post(`${url}/barang_masuk/create`, {
                 nomor_faktur: no_faktur,
@@ -176,10 +173,13 @@ const InputStok = () => {
                 headers: {
                   'Content-Type': 'application/json',
                 },
+              }).then(res => {
+                if(res.status = 200){
+                  toast.success('Input Stok Berhasil')
+                  navigate('/stok', {replace: true});
+                }
               });
-              console.log(responseBarangMasuk);
             }
-        
           } catch (error) {
             console.error(error.response ? error.response.data : error.message);
           }

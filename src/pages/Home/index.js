@@ -31,8 +31,8 @@ const Home = () => {
       </div>
       <div className={sidebarOpen ? "mainNavLayoutNotFull" : "mainNavLayoutFull"}>
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="dashboard">
-            <Col>
+        <div className="dashboard row justify-content-center">
+            {/* <Col> */}
               <HomeCard
                 link="/stok/input"
                 content="Input Stok"
@@ -41,27 +41,27 @@ const Home = () => {
                 iconColor="#FFFFFF"
                 iconWidth="25"
               />
-            </Col>
-            <Col>
+            {/* </Col>
+            <Col> */}
               <HomeCard
                 link="/penjualan/input"
-                content="Penjualan"
+                content="Input Penjualan"
                 bgColor="rgba(251, 202, 75, 1)"
                 icon="fa6-solid:rupiah-sign"
                 iconColor="#FFFFFF"
                 iconWidth="25"
               />
-            </Col>
-            <Col>
+            {/* </Col>
+            <Col> */}
               <HomeCard
-                link="/stok"
+                link="/input-sales"
                 content="Input Sales"
                 bgColor="rgba(184, 18, 18, 0.62)"
                 icon="ion:person"
                 iconColor="#FFFFFF"
                 iconWidth="25"
               />
-            </Col>
+            {/* </Col> */}
         </div>
       </div>
     </div>
